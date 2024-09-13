@@ -1,0 +1,35 @@
+https://youtu.be/8Tm0HBa1ijk
+
+
+node.js
+express
+react.js
+socket.io - постійне з'єднання сервера та клієнта
+
+-------------------------------------------------------
+npm install cors express nodemon socket.io
+
+nodemon - постійне оновлення зв'язку
+
+npm init -y
+
+create index.js
+
+npm run dev
+
+npx create-react-app ./
+
+npm install emoji-picker-react react-router-dom socket.io-client 
+
+
+dell folder src
+create folder src
+
+
+
+
+00 : 26 : 00
+
+
+
+
