@@ -1,13 +1,24 @@
 const { trimStr } = require('./utils')
 let users = [];
 
+const findUser = (user) => {
+    const userName = trimStr(user.name);
+    const userLastName = trimStr(user.lastname);
+    const userRoom = trimStr(user.room);
+
+    return users.find(
+        (u)=> trimStr(u.name) === userName && trimStr(u.lastname) === userLastName && trimStr(u.room) === userRoom );
+     
+}
+
+
+
 const addUser = (user) => {
     const userName = trimStr(user.name);
     const userLastName = trimStr(user.lastname);
     const userRoom = trimStr(user.room);
 
-    const isExist = users.find(
-        (u)=> trimStr(u.name) === userName && trimStr(u.lastname) === userLastName && trimStr(u.room) === userRoom );
+    const isExist = findUser(user);
 
     !isExist && users.push(user);
 
@@ -17,7 +28,7 @@ const addUser = (user) => {
 
 };
 
-module.exports = { addUser }
+module.exports = { addUser, findUser}
 
 
 

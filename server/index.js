@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const  app = express();
 const route = require('./route');
-const { addUser } = require('./users');
+const { addUser, findUser } = require('./users');
 
 app.use(cors({ origin: "*" }));
 app.use(route);
@@ -38,6 +38,10 @@ io.on("connection", (socket) => {
                     message: `${user.name} ${user.lastname} has joined`},
                });
      });
+
+     socket.on('sendMtssage', ({ message, params })=>{
+          const user = findUser(params);
+     })
      
 
 
