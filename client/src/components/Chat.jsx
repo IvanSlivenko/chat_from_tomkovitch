@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 // import { router } from '../../../server/route';
 import EmojiPicker from "emoji-picker-react"
 
@@ -17,10 +17,12 @@ const Chat = () => {
   
   const location = useLocation();
   const { search } = location;
+  const navigate = useNavigate();
   const [state, setState] = useState([]);
-  const [params, setParams] = useState({ room: "", user: "", LastName: "" });
+  const [params, setParams] = useState({ room: "", user: "", lastname: "" });
   const [message, setMessage] = useState("");
   const [isOpen, setOpen] = useState(false);
+  const [users, setUsers] = useState(0);
 
   
   useEffect(() => {
@@ -38,13 +40,26 @@ const Chat = () => {
     });
   },[]);
 
-  const leftRoom = () =>{};
+  useEffect(()=>{
+    socket.on('room', ({ data: { users } }) => {
+      setUsers(users.length)
+    });
+  },[]);
+
+
+
+  const leftRoom = () =>{
+    socket.emit('leftRoom', { params });
+    navigate('/')
+
+  };
   const handleChange = ({target: {value}}) => setMessage(value);
   const handleSubmit = (e) => {
-    e.preventdefault();
+
+    e.preventDefault();
 
     if(!message) return;
-    socket.emit('sendMessage', {message, params});
+    socket.emit('sendMessage', { message, params });
 
     setMessage("");
   };
@@ -54,8 +69,9 @@ const Chat = () => {
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
-        <div className={styles.title}>{params.room}</div>
-        <div className={styles.users}> 0 users in this room</div>
+        <div className={styles.title}  >{params.name} {params.lastname} в "{params.room}"  </div>
+        <div className={styles.users}> 
+              Користувачів у цій кімнаті: {users} </div>
         <button className={styles.left} onClick={leftRoom}>
           Left the room
         </button>

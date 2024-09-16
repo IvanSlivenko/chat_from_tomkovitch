@@ -7,9 +7,10 @@ const Messages = ({messages, name, lastname}) => {
         {messages.map(({user, message}, i) => {
 
             const itsMe = user.name.trim().toLowerCase() === name.trim().toLowerCase()  && user.lastname.trim().toLowerCase() === lastname.trim().toLowerCase()
-            const clssName = itsMe ? styles.my : styles.user;
+            
+            const className = itsMe ? styles.me : styles.user;
             return (
-                <div key={i} className={`${styles.message} ${clssName}`}>
+                <div key={i} className={`${styles.message} ${className}`}>
                     <span className={styles.user}>
                         {user.name} {user.lastname} 
                     </span>
